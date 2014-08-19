@@ -4,6 +4,7 @@
   "description": "`document.execCommand()` wrapper implementing the Command interface",
   "main": "index.js",
   "scripts": {
+    "prepublish": "tsc --module commonjs index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/webmodules/native-command/issues"
   },
-  "homepage": "https://github.com/webmodules/native-command"
+  "homepage": "https://github.com/webmodules/native-command",
+  "devDependencies": {
+    "typescript": "~1.0.1"
+  }
 }
