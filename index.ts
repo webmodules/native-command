@@ -1,8 +1,8 @@
 /// <reference path='command.d.ts' />
 
 class NativeCommand implements Command {
-  name: string;
-  document: Document;
+  public name: string;
+  private document: Document;
 
   constructor(name: string, doc?: Document) {
     this.name = name;
