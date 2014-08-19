@@ -4,7 +4,7 @@
   "description": "`document.execCommand()` wrapper implementing the Command interface",
   "main": "index.js",
   "scripts": {
-    "prepublish": "tsc --module commonjs index.ts",
+    "prepublish": "tsc --module commonjs --declaration index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
