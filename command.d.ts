@@ -9,3 +9,4 @@ interface Command {
   queryState(range: Range): boolean;
   queryEnabled(range: Range): boolean;
 }
+export = Command;

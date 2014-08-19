@@ -1,4 +1,29 @@
-/// <reference path='command.d.ts' />
+/// <reference path='require.d.ts' />
+
+/**
+ * TypeScript dependencies.
+ */
+
+import Command = require('./command');
+
+/**
+ * JavaScript dependencies.
+ */
+
+var debug = require('debug')('native-command');
+
+/**
+ * `NativeCommand` class that implements the `Command` interface on top of
+ * the native `document.execCommand()`, `document.queryCommandState()`, and
+ * `document.queryCommandEnabled()` functions.
+ *
+ * ``` js
+ * var bold = new NativeCommand('bold', document);
+ * bold.execute();
+ * ```
+ *
+ * @public
+ */
 
 class NativeCommand implements Command {
   public name: string;
@@ -7,6 +32,7 @@ class NativeCommand implements Command {
   constructor(name: string, doc?: Document) {
     this.name = name;
     this.document = doc || document; // default to global `document`
+    debug('created NativeCommand: name %o, document %o', this.name, this.document);
   }
 
   execute(range?: Range, value?: any): void {
@@ -15,6 +41,7 @@ class NativeCommand implements Command {
 
     if (arguments.length >= 1) {
       if (range instanceof Range) {
+        debug('setting document Selection to given Range %o', range);
         sel = this.getCurrentSelection();
         current = this.getCurrentRange(sel);
 
@@ -26,12 +53,15 @@ class NativeCommand implements Command {
       }
     }
 
-    this.document.execCommand(this.name, false, value || null);
+    if (!value) value = null;
+    debug('document.execCommand(%o, %o, %o)', this.name, false, value);
+    this.document.execCommand(this.name, false, value);
 
     // restore original selection Range if necessary
     if (range) {
       sel.removeAllRanges();
       if (current) {
+        debug('restoring Selection to original Range %o', current);
         sel.addRange(current);
       }
     }
@@ -42,8 +72,8 @@ class NativeCommand implements Command {
     var current: Range = null;
 
     // set current document selection to given `range`
-    var sel: Selection = null;
     if (range) {
+      debug('setting document Selection to given Range %o', range);
       sel = this.getCurrentSelection();
       current = this.getCurrentRange(sel);
 
@@ -51,12 +81,15 @@ class NativeCommand implements Command {
       sel.addRange(range);
     }
 
+    debug('document.queryCommandState(%o)', this.name);
     var state: boolean = this.document.queryCommandState(this.name);
+    debug('  => %o', state);
 
     // restore original selection Range if necessary
     if (range) {
       sel.removeAllRanges();
       if (current) {
+        debug('restoring Selection to original Range %o', current);
         sel.addRange(current);
       }
     }
@@ -69,8 +102,8 @@ class NativeCommand implements Command {
     var current: Range = null;
 
     // set current document selection to given `range`
-    var sel: Selection = null;
     if (range) {
+      debug('setting document Selection to given Range %o', range);
       sel = this.getCurrentSelection();
       current = this.getCurrentRange(sel);
 
@@ -78,12 +111,15 @@ class NativeCommand implements Command {
       sel.addRange(range);
     }
 
+    debug('document.queryCommandEnabled(%o)', this.name);
     var enabled: boolean = this.document.queryCommandEnabled(this.name);
+    debug('  => %o', enabled);
 
     // restore original selection Range if necessary
     if (range) {
       sel.removeAllRanges();
       if (current) {
+        debug('restoring Selection to original Range %o', current);
         sel.addRange(current);
       }
     }

@@ -29,5 +29,8 @@
   "homepage": "https://github.com/webmodules/native-command",
   "devDependencies": {
     "typescript": "~1.0.1"
+  },
+  "dependencies": {
+    "debug": "~1.0.4"
   }
 }
