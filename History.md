@@ -1,4 +1,13 @@
 
+0.1.0 / 2014-08-19
+==================
+
+ * add "visionmedia/debug" calls
+ * npmignore: add empty file so that the generated TS files get published
+ * gitignore: ignore index.d.ts and index.js
+ * index: make `string` public and `document` private
+ * package: add --declaration to `tsc` compile step
+
 0.0.1 / 2014-08-18
 ==================
 
