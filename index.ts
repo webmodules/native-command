@@ -1,4 +1,4 @@
-///<reference path='command.d.ts' />
+/// <reference path='command.d.ts' />
 
 class NativeCommand implements Command {
   name: string;
@@ -10,13 +10,11 @@ class NativeCommand implements Command {
   }
 
   execute(range?: Range, value?: any): void {
-    var hasRange: boolean = false;
     var sel: Selection = null;
     var current: Range = null;
 
     if (arguments.length >= 1) {
       if (range instanceof Range) {
-        hasRange = true;
         sel = this.getCurrentSelection();
         current = this.getCurrentRange(sel);
 
@@ -30,8 +28,8 @@ class NativeCommand implements Command {
 
     this.document.execCommand(this.name, false, value || null);
 
-    // restore original selection Range
-    if (hasRange) {
+    // restore original selection Range if necessary
+    if (range) {
       sel.removeAllRanges();
       if (current) {
         sel.addRange(current);
@@ -55,7 +53,7 @@ class NativeCommand implements Command {
 
     var state: boolean = this.document.queryCommandState(this.name);
 
-    // restore original selection Range
+    // restore original selection Range if necessary
     if (range) {
       sel.removeAllRanges();
       if (current) {
@@ -80,7 +78,7 @@ class NativeCommand implements Command {
       sel.addRange(range);
     }
 
-    var enabled: boolean =  this.document.queryCommandEnabled(this.name);
+    var enabled: boolean = this.document.queryCommandEnabled(this.name);
 
     // restore original selection Range if necessary
     if (range) {
@@ -102,7 +100,7 @@ class NativeCommand implements Command {
   private getCurrentRange(sel?: Selection, index?: number): Range {
     if (!sel) sel = this.getCurrentSelection();
     index |= 0;
-    if (sel.rangeCount === index) return null;
+    if (sel.rangeCount <= index) return null;
     return sel.getRangeAt(index);
   }
 }
