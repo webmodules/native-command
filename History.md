@@ -1,4 +1,11 @@
 
+0.1.1 / 2014-08-21
+==================
+
+ * index: ensure that passing in `null` for the Range works as expected
+ * index: add Window type declaration for `win` variable
+ * index: make `document` be public
+
 0.1.0 / 2014-08-19
 ==================
 
