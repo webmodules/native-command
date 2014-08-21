@@ -27,7 +27,7 @@ var debug = require('debug')('native-command');
 
 class NativeCommand implements Command {
   public name: string;
-  private document: Document;
+  public document: Document;
 
   constructor(name: string, doc?: Document) {
     this.name = name;
