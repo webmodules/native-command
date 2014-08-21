@@ -47,7 +47,7 @@ class NativeCommand implements Command {
 
         sel.removeAllRanges();
         sel.addRange(range);
-      } else {
+      } else if (null != range) {
         value = range;
         range = null;
       }

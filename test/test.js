@@ -226,6 +226,26 @@ describe('NativeCommand', function () {
         assert(0 === sel.rangeCount);
       });
 
+      it('should insert an A element around given `range` (with `null` for Range)', function () {
+        div = document.createElement('div');
+        div.innerHTML = 'hello <b>world!</b>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild, 1);
+        range.setEnd(div.childNodes[1].firstChild, 3);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var createLink = new NativeCommand('createLink');
+
+        createLink.execute(null, 'http://example.com/baz.html');
+        assert('h<a href="http://example.com/baz.html">ello </a><b><a href="http://example.com/baz.html">wor</a>ld!</b>' === div.innerHTML);
+      });
+
     });
 
 
