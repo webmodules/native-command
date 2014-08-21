@@ -129,7 +129,7 @@ class NativeCommand implements Command {
 
   private getCurrentSelection(): Selection {
     // TODO: use `get-window` here?
-    var win = this.document.defaultView;
+    var win: Window = this.document.defaultView;
     return win.getSelection();
   }
 
