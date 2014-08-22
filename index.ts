@@ -4,7 +4,7 @@
  * TypeScript dependencies.
  */
 
-import Command = require('./command');
+import Command = require('command');
 
 /**
  * JavaScript dependencies.
