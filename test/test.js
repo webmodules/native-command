@@ -19,8 +19,8 @@ describe('NativeCommand', function () {
       var bold = new NativeCommand('bold');
 
       assert(bold instanceof NativeCommand);
-      assert(bold.name === 'bold');
-      assert(bold.document === document);
+      assert.equal(bold.name, 'bold');
+      assert.equal(bold.document, document);
     });
 
     describe('execute()', function () {
@@ -42,7 +42,7 @@ describe('NativeCommand', function () {
         var bold = new NativeCommand('bold');
         bold.execute();
 
-        assert('h<b>el</b>lo <b>world!</b>' === div.innerHTML);
+        assert.equal('h<b>el</b>lo <b>world!</b>', div.innerHTML);
       });
 
     });
