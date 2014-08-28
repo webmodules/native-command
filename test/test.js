@@ -2,7 +2,6 @@
 var assert = require('assert');
 var NativeCommand = require('../');
 
-
 describe('NativeCommand', function () {
   var div;
 
