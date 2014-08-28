@@ -42,7 +42,7 @@ describe('NativeCommand', function () {
         var bold = new NativeCommand('bold');
         bold.execute();
 
-        assert.equal('h<b>el</b>lo <b>world!</b>', div.innerHTML);
+        assert(/h<(b|strong)>el<\/(b|strong)>lo <b>world!<\/b>/.test(div.innerHTML));
       });
 
     });
@@ -72,7 +72,7 @@ describe('NativeCommand', function () {
         var bold = new NativeCommand('bold');
         bold.execute(range);
 
-        assert('<b>he</b>llo <b>world!</b>' === div.innerHTML);
+        assert(/<(b|strong)>he<\/(b|strong)>llo <b>world!<\/b>/.test(div.innerHTML));
 
         // test that the current selection is still intact
         assert(sel.rangeCount === 1);
