@@ -225,7 +225,7 @@ describe('NativeCommand', function () {
         assert(0 === sel.rangeCount);
       });
 
-      it('should insert an A element around given `range` (with `null` for Range)', function () {
+      it('should insert an A element around selection (with `null` for Range)', function () {
         div = document.createElement('div');
         div.innerHTML = 'hello <b>world!</b>';
         div.setAttribute('contenteditable', 'true');
