@@ -5,6 +5,8 @@
  */
 
 import Command = require('command');
+import currentRange = require('current-range');
+import currentSelection = require('current-selection');
 
 /**
  * JavaScript dependencies.
@@ -42,8 +44,8 @@ class NativeCommand implements Command {
     if (arguments.length >= 1) {
       if (range instanceof Range) {
         debug('setting document Selection to given Range %o', range);
-        sel = this.getCurrentSelection();
-        current = this.getCurrentRange(sel);
+        sel = currentSelection(this.document);
+        current = currentRange(sel);
 
         sel.removeAllRanges();
         sel.addRange(range);
@@ -74,8 +76,8 @@ class NativeCommand implements Command {
     // set current document selection to given `range`
     if (range) {
       debug('setting document Selection to given Range %o', range);
-      sel = this.getCurrentSelection();
-      current = this.getCurrentRange(sel);
+      sel = currentSelection(this.document);
+      current = currentRange(sel);
 
       sel.removeAllRanges();
       sel.addRange(range);
@@ -104,8 +106,8 @@ class NativeCommand implements Command {
     // set current document selection to given `range`
     if (range) {
       debug('setting document Selection to given Range %o', range);
-      sel = this.getCurrentSelection();
-      current = this.getCurrentRange(sel);
+      sel = currentSelection(this.document);
+      current = currentRange(sel);
 
       sel.removeAllRanges();
       sel.addRange(range);
@@ -125,19 +127,6 @@ class NativeCommand implements Command {
     }
 
     return enabled;
-  }
-
-  private getCurrentSelection(): Selection {
-    // TODO: use `get-window` here?
-    var win: Window = this.document.defaultView;
-    return win.getSelection();
-  }
-
-  private getCurrentRange(sel?: Selection, index?: number): Range {
-    if (!sel) sel = this.getCurrentSelection();
-    index |= 0;
-    if (sel.rangeCount <= index) return null;
-    return sel.getRangeAt(index);
   }
 }
 
