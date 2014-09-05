@@ -61,6 +61,8 @@ class NativeCommand implements Command {
 
     // restore original selection Range if necessary
     if (range) {
+      copyRange(range, currentRange(sel));
+
       sel.removeAllRanges();
       if (current) {
         debug('restoring Selection to original Range %o', current);
@@ -128,6 +130,12 @@ class NativeCommand implements Command {
 
     return enabled;
   }
+}
+
+function copyRange (source: Range, target: Range) {
+  if (!target) return;
+  source.setStart(target.startContainer, target.startOffset);
+  source.setEnd(target.endContainer, target.endOffset);
 }
 
 export = NativeCommand;

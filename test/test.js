@@ -31,7 +31,7 @@ describe('NativeCommand', function () {
         div.setAttribute('contenteditable', 'true');
         document.body.appendChild(div);
 
-        // set current selection
+        // set current Selection
         var range = document.createRange();
         range.setStart(div.firstChild, 1);
         range.setEnd(div.firstChild, 3);
@@ -42,7 +42,11 @@ describe('NativeCommand', function () {
         var bold = new NativeCommand('bold');
         bold.execute();
 
+        // test that we have the expected HTML at this point
+        // Note that IE uses STRONG instead of B
         assert(/h<(b|strong)>el<\/(b|strong)>lo <b>world!<\/b>/.test(div.innerHTML));
+
+        // test that the current Selection
       });
 
     });
@@ -72,7 +76,16 @@ describe('NativeCommand', function () {
         var bold = new NativeCommand('bold');
         bold.execute(range);
 
+        // test that we have the expected HTML at this point
+        // Note that IE uses STRONG instead of B
         assert(/<(b|strong)>he<\/(b|strong)>llo <b>world!<\/b>/.test(div.innerHTML));
+
+        // test that the given Range has the B element selected
+        assert.equal('he', range.toString());
+        assert(range.startContainer === div.firstChild.firstChild);
+        assert(range.startOffset === 0);
+        assert(range.endContainer === div.firstChild.firstChild);
+        assert(range.endOffset === 2);
 
         // test that the current selection is still intact
         assert(sel.rangeCount === 1);
