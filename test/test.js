@@ -231,8 +231,10 @@ describe('NativeCommand', function () {
 
         var createLink = new NativeCommand('createLink');
 
+        console.log(div.innerHTML);
         createLink.execute(range, 'http://example.com/bar.html');
 
+        console.log(div.innerHTML);
         assert('<a href="http://example.com/bar.html">h</a>ello <b>world!</b>' === div.innerHTML);
 
         // test that the current selection is still cleared
@@ -256,7 +258,9 @@ describe('NativeCommand', function () {
 
         var createLink = new NativeCommand('createLink');
 
+        console.log(div.innerHTML);
         createLink.execute(null, 'http://example.com/baz.html');
+        console.log(div.innerHTML);
         assert('h<a href="http://example.com/baz.html">ello </a><b><a href="http://example.com/baz.html">wor</a>ld!</b>' === div.innerHTML);
       });
 
