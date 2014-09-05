@@ -114,9 +114,17 @@ class NativeCommand implements Command {
       sel.addRange(range);
     }
 
-    debug('document.queryCommandEnabled(%o)', this.name);
-    var enabled: boolean = sel.rangeCount > 0 && this.document.queryCommandEnabled(this.name);
-    debug('  => %o', enabled);
+    // older versions of Opera seem to always return `true`, even when there
+    // is no Selection. So manually implement logic to ensure that there's
+    // a selection before invoking the native `document.queryCommandEnabled()`
+    // function.
+    var enabled: boolean = !!(range || sel.rangeCount > 0);
+    if (enabled) {
+      debug('document.queryCommandEnabled(%o)', this.name);
+      enabled = this.document.queryCommandEnabled(this.name);
+    } else {
+      debug('no current Selection, forcing `false` for queryEnabled()');
+    }
 
     // restore original selection Range if necessary
     if (range) {
