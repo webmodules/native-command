@@ -48,7 +48,9 @@ describe('NativeCommand', function () {
         // Note that IE uses STRONG instead of B
         assert(/h<(b|strong)>el<\/(b|strong)>lo <b>world!<\/b>/.test(div.innerHTML));
 
-        // test that the current Selection
+        // test that the current Selection contains the "el"
+        sel = window.getSelection();
+        assert.equal('el', sel.getRangeAt(0).toString());
       });
 
     });
@@ -228,6 +230,10 @@ describe('NativeCommand', function () {
         assert(!b);
 
         // TODO: add more definitive tests...
+
+        // test that the current Selection is in the proper place
+        sel = window.getSelection();
+        assert.equal('ello wor', sel.getRangeAt(0).toString());
       });
 
     });
@@ -258,6 +264,9 @@ describe('NativeCommand', function () {
         // test that the current selection is still cleared
         sel = window.getSelection();
         assert(0 === sel.rangeCount);
+
+        // test that the Range contains the text within the A
+        assert.equal('h', range.toString());
       });
 
       it('should insert an A element around selection (with `null` for Range)', function () {
@@ -293,6 +302,11 @@ describe('NativeCommand', function () {
         assert(!b);
 
         // TODO: add more definitive tests...
+
+
+        // test that the current Selection is in the proper place
+        sel = window.getSelection();
+        assert.equal('ello wor', sel.getRangeAt(0).toString());
       });
 
     });
