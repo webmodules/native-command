@@ -1,4 +1,15 @@
 
+0.2.0 / 2014-09-04
+==================
+
+ * index: add explanation about manual queryEnabled() impl
+ * index: add logic to reset the passed in Range after execute()
+ * test: enable Saucelabs + Travis automated testing
+ * test: disable the Range selection test for now (fails on IE)
+ * test: fix test cases on all browsers
+ * package: add "zuul" as a dev dependency
+ * README: add Travis-CI build and Install instructions
+
 0.1.1 / 2014-08-21
 ==================
 
