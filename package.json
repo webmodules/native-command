@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/webmodules/native-command",
   "devDependencies": {
+    "component-closest": "~0.1.4",
     "typescript": "~1.0.1",
     "zuul": "~1.10.2"
   },

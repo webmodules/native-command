@@ -1,5 +1,6 @@
 
 var assert = require('assert');
+var closest = require('component-closest');
 var NativeCommand = require('../');
 
 describe('NativeCommand', function () {
@@ -205,12 +206,24 @@ describe('NativeCommand', function () {
         sel.addRange(range);
 
         var createLink = new NativeCommand('createLink');
-
-        console.log(div.innerHTML);
         createLink.execute('http://example.com/foo.html');
-        console.log(div.innerHTML);
 
-        assert('h<a href="http://example.com/foo.html">ello </a><b><a href="http://example.com/foo.html">wor</a>ld!</b>' === div.innerHTML);
+        // we can't just compare raw HTML here since older (v12) Opera
+        // inserts the A tag in a different hierarchy order than other
+        // web browsers:
+        //  Opera v12: 'h<a href="http://example.com/foo.html">ello <b>wor</b></a><b>ld!</b>'
+        //  Others:    'h<a href="http://example.com/foo.html">ello </a><b><a href="http://example.com/foo.html">wor</a>ld!</b>'
+        var a, b;
+
+        a = closest(div.childNodes[1].firstChild, 'a');
+        assert(a);
+        assert(a.nodeName === 'A');
+        assert(a.href === 'http://example.com/foo.html');
+
+        b = closest(div.childNodes[1].firstChild, 'b');
+        assert(!b);
+
+        // TODO: add more definitive tests...
       });
 
     });
@@ -258,11 +271,24 @@ describe('NativeCommand', function () {
         sel.addRange(range);
 
         var createLink = new NativeCommand('createLink');
-
-        console.log(div.innerHTML);
         createLink.execute(null, 'http://example.com/baz.html');
-        console.log(div.innerHTML);
-        assert('h<a href="http://example.com/baz.html">ello </a><b><a href="http://example.com/baz.html">wor</a>ld!</b>' === div.innerHTML);
+
+        // again, we can't just compare raw HTML here since older (v12) Opera
+        // inserts the A tag in a different hierarchy order than other
+        // web browsers:
+        //  Opera v12: 'h<a href="http://example.com/foo.html">ello <b>wor</b></a><b>ld!</b>'
+        //  Others:    'h<a href="http://example.com/baz.html">ello </a><b><a href="http://example.com/baz.html">wor</a>ld!</b>'
+        var a, b;
+
+        a = closest(div.childNodes[1].firstChild, 'a');
+        assert(a);
+        assert(a.nodeName === 'A');
+        assert(a.href === 'http://example.com/baz.html');
+
+        b = closest(div.childNodes[1].firstChild, 'b');
+        assert(!b);
+
+        // TODO: add more definitive tests...
       });
 
     });
