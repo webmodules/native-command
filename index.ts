@@ -102,13 +102,12 @@ class NativeCommand implements Command {
   }
 
   queryEnabled(range?: Range): boolean {
-    var sel: Selection = null;
     var current: Range = null;
+    var sel: Selection = currentSelection(this.document);
 
     // set current document selection to given `range`
     if (range) {
       debug('setting document Selection to given Range %o', range);
-      sel = currentSelection(this.document);
       current = currentRange(sel);
 
       sel.removeAllRanges();
@@ -116,7 +115,7 @@ class NativeCommand implements Command {
     }
 
     debug('document.queryCommandEnabled(%o)', this.name);
-    var enabled: boolean = this.document.queryCommandEnabled(this.name);
+    var enabled: boolean = sel.rangeCount > 0 && this.document.queryCommandEnabled(this.name);
     debug('  => %o', enabled);
 
     // restore original selection Range if necessary
