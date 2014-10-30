@@ -1,4 +1,13 @@
 
+0.2.1 / 2014-10-30
+==================
+
+ * package: update outdated dependencies
+ * package: allow any "debug" v2
+ * test: add Selection/Range tests after execute() calls
+ * test: re-enable the Range boundary tests
+ * travis: remove extra chrome and firefox, add iphone
+
 0.2.0 / 2014-09-04
 ==================
 

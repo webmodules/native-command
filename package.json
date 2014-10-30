@@ -1,6 +1,6 @@
 {
   "name": "native-command",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "`document.execCommand()` wrapper implementing the Command interface",
   "main": "index.js",
   "scripts": {
