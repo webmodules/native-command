@@ -28,14 +28,14 @@
   },
   "homepage": "https://github.com/webmodules/native-command",
   "devDependencies": {
-    "component-closest": "~0.1.4",
-    "range-normalize": "0.0.3",
+    "component-closest": "0.1.4",
+    "range-normalize": "~1.0.0",
     "typescript": "~1.0.1",
     "zuul": "~1.10.2"
   },
   "dependencies": {
-    "current-range": "1.1.0",
-    "current-selection": "1.1.0",
+    "current-range": "~1.1.0",
+    "current-selection": "~1.1.0",
     "debug": "2"
   }
 }
