@@ -1,5 +1,6 @@
 
 var assert = require('assert');
+var query = require('component-query');
 var closest = require('component-closest');
 var normalize = require('range-normalize');
 var NativeCommand = require('../');
@@ -311,6 +312,61 @@ describe('NativeCommand', function () {
 
     });
 
+
+  });
+
+  describe('"insertUnorderedList" command', function () {
+
+    it('should create a "insertUnorderedList" command', function () {
+      var insertUnorderedList = new NativeCommand('insertUnorderedList');
+
+      assert(insertUnorderedList instanceof NativeCommand);
+      assert(insertUnorderedList.name === 'insertUnorderedList');
+      assert(insertUnorderedList.document === document);
+    });
+
+    describe('execute()', function () {
+
+      it('should insert a UL block around selection', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>hello</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 1);
+        range.setEnd(div.firstChild.firstChild, 3);
+        assert(!range.collapsed);
+        assert.equal('el', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var insertUnorderedList = new NativeCommand('insertUnorderedList');
+        assert(!query('ul', div));
+
+        // should create a UL within the DIV
+        insertUnorderedList.execute();
+        assert(query('ul', div));
+
+        // test that the current Selection is in the proper place
+        sel = window.getSelection();
+        assert(!sel.getRangeAt(0).collapsed);
+        assert.equal('el', sel.getRangeAt(0).toString());
+
+        // now inverse function
+        insertUnorderedList.execute();
+        assert(!query('ul', div));
+
+        // test that the current Selection is in the proper place
+        sel = window.getSelection();
+        assert(!sel.getRangeAt(0).collapsed);
+        assert.equal('el', sel.getRangeAt(0).toString());
+      });
+
+    });
 
   });
 
